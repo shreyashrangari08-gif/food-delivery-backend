@@ -1,20 +1,18 @@
 const express = require('express');
-const dotenv = require('dotenv');
+const mongoose = require('mongoose');
 const cors = require('cors');
-const connectDB = require('./configdb'); // File ka naam wahi rakhein jo aapne banaya hai
+require('dotenv').config();
 
-const orderRoutes = require('./oderroutes'); // File ka naam check karein
-
-dotenv.config();
-connectDB();
+const orderRoutes = require('./oderroutes'); // Path fix kiya
 
 const app = express();
-app.use(cors());
 app.use(express.json());
+app.use(cors());
 
-app.get('/', (req, res) => {
-    res.send("API is running...");
-});
+// MongoDB Connection
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log("MongoDB Connected Successfully"))
+  .catch(err => console.log(err));
 
 app.use('/api/orders', orderRoutes);
 
