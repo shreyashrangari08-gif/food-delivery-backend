@@ -1,29 +1,21 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
-const connectDB = require('./config/db');
+const connectDB = require('./configdb'); // File ka naam wahi rakhein jo aapne banaya hai
 
-// Models ko yahan import karne ki zaroorat nahi hai agar aap sirf routes use kar rahe hain
-const orderRoutes = require('./routes/orderRoutes');
+const orderRoutes = require('./oderroutes'); // File ka naam check karein
 
-// Environment variables setup
 dotenv.config();
-
-// Database connection
 connectDB();
 
 const app = express();
+app.use(cors());
+app.use(express.json());
 
-// Middleware
-app.use(cors()); // Cross-Origin Resource Sharing ke liye
-app.use(express.json()); // JSON body parse karne ke liye
-
-// Routes
 app.get('/', (req, res) => {
-    res.send("Food Delivery API is running...");
+    res.send("API is running...");
 });
 
-// Order Routes - /api/orders/place-order
 app.use('/api/orders', orderRoutes);
 
 const PORT = process.env.PORT || 5000;
