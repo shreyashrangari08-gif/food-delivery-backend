@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const { createOrder } = require('../controllers/orderController');
+const orderController = require('./controller'); // Path fix kiya
 
-router.post('/place-order', createOrder);
+router.post('/create', orderController.createOrder);
 
 module.exports = router;
